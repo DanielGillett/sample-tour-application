@@ -33,7 +33,7 @@ process.on('unhandledRejection', err => {
     server.close(() => process.exit(1));
 });
 
-// Heroku containers shutdown applications to refresh so we handle the SIGTERM here
+// Heroku containers/dyno shutdown applications to refresh so we handle the SIGTERM here
 process.on('SIGTERM', () => {
     console.log('SIGTERM RECEIVED. Shutting down gracefully');
     server.close(() => {
