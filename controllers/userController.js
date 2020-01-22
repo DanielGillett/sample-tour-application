@@ -5,6 +5,7 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
 
+// Use Disk Storage
 // const multerStorage = multer.diskStorage({
 //     destination: (req, file, cb) => {
 //         cb(null, 'public/img/users');
@@ -14,6 +15,7 @@ const factory = require('./handlerFactory');
 //         cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
 //     }
 // });
+// Use memoryStorage (faster!)
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
@@ -65,8 +67,10 @@ exports.updateMe = catchAsync(async (req, res, next) => {
             )
         );
 
+    // Reject user's name and email.  that is handled on another route
     // 2) filter out unwanted field names that are not allowed to be updated
     const filteredBody = filterObj(req.body, 'name', 'email');
+
     if (req.file) filteredBody.photo = req.file.filename;
 
     // 3) Update user document

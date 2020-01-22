@@ -12,6 +12,7 @@ const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
+
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
@@ -60,7 +61,7 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-//Strip web hook (ahead of body parser)
+//Stripe web hook (ahead of body parser)
 // use exmpress build in raw body parser
 app.post(
     '/webhook-checkout',
